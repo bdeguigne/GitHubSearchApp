@@ -6,7 +6,6 @@ var textColorFocus = '#333333';
 var borderColorUnfocus = '#FFFFFF';
 var borderColorFocus = "#333333"
 
-
 export function RepositoriesTab(props) {
     const settingImageFocused = require("./assets/repoFocus.png");
     const settingImageUnfocused = require("./assets/repo.png");
