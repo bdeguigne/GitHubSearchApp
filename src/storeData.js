@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from "uuid-random";
 
+var callBackFunction = () => {};
+
 // STORE
 const storeUser = async (login, avatarURL, type) => {
     const value = {
@@ -12,6 +14,7 @@ const storeUser = async (login, avatarURL, type) => {
     try {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem("favUser_" + uuid(), jsonValue);
+        callBackFunction();
         console.log("Successfully store user : ", value);
     } catch (e) {
         console.log("Store User failed", e);
@@ -33,6 +36,7 @@ const storeRepo = async (name, isPrivate, isFork, description, size, branch) => 
     try {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem("favRepo_" + uuid(), jsonValue);
+        callBackFunction();
         console.log("Successfully store repo : ", value);
     } catch (e) {
         console.log("Store Repo failed", e);
@@ -41,6 +45,9 @@ const storeRepo = async (name, isPrivate, isFork, description, size, branch) => 
     return true;
 }
 
+const setCallbackFunction = (func) => {
+    callBackFunction = func;
+}
 
 // GET
 const getData = async () => {
@@ -94,5 +101,6 @@ export {
     storeRepo,
     getData,
     clearData,
-    removeItem
+    removeItem,
+    setCallbackFunction
 }

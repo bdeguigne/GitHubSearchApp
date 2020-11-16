@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, StatusBar } from "react-native";
-import { storeUser, getData, clearData, storeRepo } from "./storeData";
+import { storeUser, getData, clearData, storeRepo, setCallbackFunction } from "./storeData";
 import UserCard from "./FavoritesUserCard";
 import RepoCard from "./FavoritesRepoCard";
 
@@ -9,7 +9,12 @@ const Favorites = () => {
     const [favRepoData, setFavRepoData] = useState([]);
     const [navBarStatus, setNavBarStatus] = useState("user");
 
+    const newValueCallback = () => {
+        getAllData();
+    }
+
     useEffect(() => {
+        setCallbackFunction(newValueCallback);
         getAllData();
     }, [navBarStatus]);
 
@@ -45,7 +50,6 @@ const Favorites = () => {
 
         getAllData();
     }
-
 
     const clearList = () => {
         clearData();
