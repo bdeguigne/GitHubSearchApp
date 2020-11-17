@@ -2638,7 +2638,7 @@
   "resolved" "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.0.2.tgz"
   "version" "1.0.2"
 
-"expo@~39.0.2":
+"expo@^39.0.3":
   "integrity" "sha512-pbLlkq43XDViEQpzgIW8hEPRibwjSml1uZQ3imPpCDfjMGlq7J6+IIN7q4kd+Hp+W0J6w6INYPR0E/dxdEBkSw=="
   "resolved" "https://registry.yarnpkg.com/expo/-/expo-39.0.3.tgz"
   "version" "39.0.3"

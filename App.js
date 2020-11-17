@@ -7,6 +7,7 @@ import Users from "./src/Users";
 import Issues from "./src/Issues";
 import Follows from './src/UsrFollow'
 import Repos from './src/UsrRepos'
+import Contributors from './src/Contributors'
 import { RepositoriesTab, UsersTab, FavTab } from "./src/NavigationStyle";
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Scene key="issues" component={Issues} hideNavBar={true} title="Issues" />
         <Scene key="followers" component={Follows} hideNavBar={true} title="Followers" />
         <Scene key="repos" component={Repos} hideNavBar={true} title="Repos" />
+        <Scene key="contributors" component={Contributors} hideNavBar={true} title="Contributors" />
       </Stack>
     </Router>
   );
