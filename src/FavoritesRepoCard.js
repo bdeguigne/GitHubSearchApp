@@ -15,7 +15,7 @@ const RepoCard = ({ name, isPrivate, isFork, description, size, branch, id, getA
 
     return (
         <View style={styles.cardContainer}>
-            <View>
+            <View style={{flex: 1}}>
                 <Text style={styles.repoName}>{name}</Text>
                 <Text>{description}</Text>
                 <View style={styles.bottomIconContainer}>
