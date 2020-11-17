@@ -1,7 +1,32 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from "uuid-random";
 
-var callBackFunction = () => {};
+var callBackFunction = () => { };
+
+const checkUserExist = async (value) => {
+    const data = await getData();
+    var check = false;
+    data.forEach(element => {
+        let userData = JSON.parse(element[1]);
+        if (userData.avatarURL === value.avatarURL && userData.login === value.login && userData.userType === value.userType) {
+            check = true;
+        }
+    })
+    return check;
+}
+
+const checkRepoExist = async (value) => {
+    const data = await getData();
+    var check = false;
+    data.forEach(element => {
+        let repoData = JSON.parse(element[1]);
+        if (repoData.name === value.name && repoData.isPrivate === value.isPrivate && repoData.isFork === value.isFork && repoData.description === value.description) {
+            check = true;
+        }
+    })
+    return check;
+}
+
 
 // STORE
 const storeUser = async (login, avatarURL, type) => {
@@ -12,10 +37,15 @@ const storeUser = async (login, avatarURL, type) => {
         type: "user"
     }
     try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("favUser_" + uuid(), jsonValue);
-        callBackFunction();
-        console.log("Successfully store user : ", value);
+        if (await checkUserExist(value) === false) {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem("favUser_" + uuid(), jsonValue);
+            callBackFunction();
+            console.log("Successfully store user : ", value);
+        } else {
+            console.log("User already exist");
+            return false;
+        }
     } catch (e) {
         console.log("Store User failed", e);
         return false;
@@ -25,19 +55,25 @@ const storeUser = async (login, avatarURL, type) => {
 
 const storeRepo = async (name, isPrivate, isFork, description, size, branch) => {
     const value = {
-       name,
-       isPrivate,
-       isFork,
-       description,
-       size,
-       branch,
-       type:"repo"
+        name,
+        isPrivate,
+        isFork,
+        description,
+        size,
+        branch,
+        type: "repo"
     }
     try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("favRepo_" + uuid(), jsonValue);
-        callBackFunction();
-        console.log("Successfully store repo : ", value);
+        if (await checkRepoExist(value) === false) {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem("favRepo_" + uuid(), jsonValue);
+            callBackFunction();
+            console.log("Successfully store repo : ", value);
+        }
+        else {
+            console.log("Repository already exist");
+            return false;
+        }
     } catch (e) {
         console.log("Store Repo failed", e);
         return false;
@@ -53,7 +89,7 @@ const setCallbackFunction = (func) => {
 const getData = async () => {
     const keys = await getkeys();
     let values;
-    
+
     try {
         values = await AsyncStorage.multiGet(keys);
         if (values == null) {
@@ -81,7 +117,7 @@ const getkeys = async () => {
 const clearData = async () => {
     try {
         await AsyncStorage.clear();
-    } catch(e) {
+    } catch (e) {
         return null;
     }
 }
